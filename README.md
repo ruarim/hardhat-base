@@ -12,5 +12,6 @@ npx hardhat test
 npx hardhat node
 node scripts/deploy.js
 node scripts/interact.js
+npx hardhat verify CONTRACT_ADDRESS_HERE --network polygon
 npx hardhat help
 ```
