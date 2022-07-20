@@ -6,7 +6,7 @@ async function main() {
 
   //get contract
   const contract = await getContract(
-    "GLDToken", //contract name
+    "AD NAME HERE", //contract name
     "ADD DEPLOYED CONTRACT ADDRESS HERE" //contract address
   );
 
