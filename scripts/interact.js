@@ -1,14 +1,13 @@
 //import contract name and address
 const { ethers } = require("hardhat");
 
-
 async function main() {
   const [owner] = await ethers.getSigners();
 
   //get contract
   const contract = await getContract(
     "GLDToken", //contract name
-    "0xf0f202Cb0954a4f07590Fbe8aBc6d60869d7A79E" //contract address
+    "ADD DEPLOYED CONTRACT ADDRESS HERE" //contract address
   );
 
   const amount = ethers.utils.parseEther("1");
