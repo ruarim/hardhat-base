@@ -1,24 +1,32 @@
+//import contract name and address
+const { ethers } = require("hardhat");
+
+
 async function main() {
+  const [owner] = await ethers.getSigners();
+
   //get contract
   const contract = await getContract(
-    "CloneFactory", //contract name
-    "0x29f7A6792a82C4B604450319FcfE8Feb9FAe4575" //contract address
+    "GLDToken", //contract name
+    "0xf0f202Cb0954a4f07590Fbe8aBc6d60869d7A79E" //contract address
   );
-  
-  //interact
-  const args = [];
-  const tx = await contract.functions.createClone();
-  const receipt = await tx.wait();
 
-  console.log(receipt.events[0]?.args.newClone);
-  
-  const newClone = await contract.functions.getLatestClone();
-  console.log(newClone);
+  const amount = ethers.utils.parseEther("1");
+
+  const recipient = owner.address;
+
+  //interact
+  const args = [recipient, amount];
+  const tx = await contract.functions.mint(...args);
+  const receipt = await tx.wait();
+  console.log(receipt);
+
+  console.log("erc20 balance: ", await contract.functions.balanceOf(recipient));
 }
 
 async function getContract(name, address) {
   const Contract = await ethers.getContractFactory(name);
-  const contract = await Contract.attach(address);
+  const contract = Contract.attach(address);
   return contract;
 }
 

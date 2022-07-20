@@ -3,15 +3,22 @@ const hre = require("hardhat");
 async function main() {
   //signers
   const [owner] = await ethers.getSigners();
+  const amount = ethers.utils.parseEther("1");
 
   //deploy contract
   const contract = await deploy(
-    "CloneFactory", //contract name
-    [] //list of deploy args
+    "GLDToken", //contract name
+    [amount] //list of deploy args
   );
 
   await contract.deployed();
   console.log("Contract deployed to:", contract.address);
+  
+  console.log(
+    "erc20 balance: ",
+    await contract.functions.balanceOf(owner.address)
+  );
+  
 }
 
 async function deploy(name, args) {
