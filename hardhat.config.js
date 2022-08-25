@@ -1,8 +1,13 @@
 require("@nomiclabs/hardhat-waffle");
 require("dotenv").config();
 require("@nomiclabs/hardhat-etherscan");
+require("hardhat-gas-reporter");
+require("@nomiclabs/hardhat-vyper");
 
-const { PRIVATE_KEY, POLYGONSCAN_API_KEY } = process.env;
+const { PRIVATE_KEY, POLYGONSCAN_API_KEY, REPORT_GAS } = process.env;
+
+const accounts = [`${PRIVATE_KEY}`];
+
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
@@ -21,7 +26,6 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  */
 module.exports = {
   solidity: "0.8.4",
-  defaultNetwork: "mumbai",
   networks: {
     hardhat: {
       forking: {
@@ -30,14 +34,21 @@ module.exports = {
     },
     polygon: {
       url: "https://polygon-rpc.com",
-      accounts: [`${PRIVATE_KEY}`],
+      accounts,
     },
     mumbai: {
-      url: "https://matic-testnet-archive-rpc.bwarelabs.com/",
-      accounts: [`${PRIVATE_KEY}`],
+      url: "https://polygon-testnet.public.blastapi.io",
+      accounts,
+    },
+    fuji: {
+      url: "https://rpc.ankr.com/avalanche_fuji",
+      accounts,
     },
   },
   etherscan: {
     apiKey: `${POLYGONSCAN_API_KEY}`,
+  },
+  gasReporter: {
+    enabled: REPORT_GAS ? true : false,
   },
 };
